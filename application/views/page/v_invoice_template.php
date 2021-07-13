@@ -44,48 +44,56 @@ foreach ($barang->result() as $b) {
                     endif; ?>
                     <!-- <div class="card"> -->
                     <!-- <div class="container"> -->
-                    <div class="row">
-                        <div class="col-md-6" style="padding: 20px;">
-                            <img src="<?= base_url() ?>assets/logo_sukses_mandiri_dark.png" alt="logo" class="img-fluid" width="25%"><br>
-                            <table>
-                                <tr>
-                                    <td style="width: 100px;">Alamat</td>
-                                    <td>:</td>
-                                    <td>Jln. Medan-Banda Aceh Meunasah Mesjid Cunda-Kota Lhokseumawe</td>
-                                </tr>
-                                <tr>
-                                    <td>Telp</td>
-                                    <td>:</td>
-                                    <td>08126406765</td>
-                                </tr>
-                            </table>
+                    <?php
+                    $diskon = 0;
+                    $total_page = ceil($total_brg / 10);
+                    $page_from = 0;
+                    $page_to = 10;
+                    $no = 1;
+                    for ($th = 1; $th <= $total_page; $th++) {
+                    ?>
+                        <div class="row">
+                            <div class="col-md-6" style="padding: 20px;">
+                                <img src="<?= base_url() ?>assets/logo_sukses_mandiri_dark.png" alt="logo" class="img-fluid" width="25%"><br>
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px;">Alamat</td>
+                                        <td>:</td>
+                                        <td>Jln. Medan-Banda Aceh Meunasah Mesjid Cunda-Kota Lhokseumawe</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Telp</td>
+                                        <td>:</td>
+                                        <td>08126406765</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-4 offset-md-2" style="padding: 20px;">
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px;font-size:16px;font-weight:bold;">INVOICE #</td>
+                                        <td style="font-size: 16px;font-weight:bold;">:</td>
+                                        <td style="font-size: 16px;font-weight:bold;"><?= $invoice->invoice_kode ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Toko</td>
+                                        <td>:</td>
+                                        <td><?= $toko->toko_nama ?> / <?= $toko->toko_alamat ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Sales</td>
+                                        <td>:</td>
+                                        <td><?= $sales->salless_nama ?> / <?= $sales->salles_no_hp ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100px;">Tanggal</td>
+                                        <td>:</td>
+                                        <td><?= TanggalIndo($invoice->invoice_tgl) ?></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-md-4 offset-md-2" style="padding: 20px;">
-                            <table>
-                                <tr>
-                                    <td style="width: 100px;font-size:16px;font-weight:bold;">INVOICE #</td>
-                                    <td style="font-size: 16px;font-weight:bold;">:</td>
-                                    <td style="font-size: 16px;font-weight:bold;"><?= $invoice->invoice_kode ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px;">Toko</td>
-                                    <td>:</td>
-                                    <td><?= $toko->toko_nama ?> / <?= $toko->toko_alamat ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px;">Sales</td>
-                                    <td>:</td>
-                                    <td><?= $sales->salless_nama ?> / <?= $sales->salles_no_hp ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100px;">Tanggal</td>
-                                    <td>:</td>
-                                    <td><?= TanggalIndo($invoice->invoice_tgl) ?></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- <div class="row">
+                        <!-- <div class="row">
                         <div class="col-md-3" style="padding: 20px;">
                             <img src="<?= base_url() ?>assets/logo_sukses_mandiri_dark.png" alt="logo" class="img-fluid" width="50%"><br>
                             <font style="font-size: small;">
@@ -103,13 +111,14 @@ foreach ($barang->result() as $b) {
                             </font>
                         </div>
                     </div> -->
-                    <?php
-                    $diskon = 0;
-                    $total_page = ceil($total_brg / 10);
-                    $page_from = 0;
-                    $page_to = 10;
-                    $no = 1;
-                    for ($th = 1; $th <= $total_page; $th++) { ?>
+                        <?php
+                        // $diskon = 0;
+                        // $total_page = ceil($total_brg / 10);
+                        // $page_from = 0;
+                        // $page_to = 10;
+                        // $no = 1;
+                        // for ($th = 1; $th <= $total_page; $th++) {
+                        ?>
                         <table class="table table-orders">
                             <thead>
                                 <tr>
@@ -145,7 +154,7 @@ foreach ($barang->result() as $b) {
                                         ?>
                                     </tr>
                                 <?php } ?>
-                                <?php if ($th == $total_page) { ?>
+                                <?php if ($th == $total_page && $barang->num_rows() <= 6) { ?>
                                     <tr>
                                         <td colspan="3" style="text-align: right; font-size:medium;">Jumlah : </td>
                                         <td style="font-size:medium;"><b><?= $jumlah_brg; ?></b></td>
@@ -163,17 +172,73 @@ foreach ($barang->result() as $b) {
                                 <?php } ?>
                             </tbody>
                         </table>
-                        <?php if ($th == $total_page) { ?>
+                        <?php if ($th == $total_page && $barang->num_rows() > 6) { ?>
+                            <div style="margin-bottom:200px"></div>
+                            <div class="row">
+                                <div class="col-md-6" style="padding: 20px;">
+                                    <img src="<?= base_url() ?>assets/logo_sukses_mandiri_dark.png" alt="logo" class="img-fluid" width="25%"><br>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 100px;">Alamat</td>
+                                            <td>:</td>
+                                            <td>Jln. Medan-Banda Aceh Meunasah Mesjid Cunda-Kota Lhokseumawe</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Telp</td>
+                                            <td>:</td>
+                                            <td>08126406765</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-4 offset-md-2" style="padding: 20px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 100px;font-size:16px;font-weight:bold;">INVOICE #</td>
+                                            <td style="font-size: 16px;font-weight:bold;">:</td>
+                                            <td style="font-size: 16px;font-weight:bold;"><?= $invoice->invoice_kode ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px;">Toko</td>
+                                            <td>:</td>
+                                            <td><?= $toko->toko_nama ?> / <?= $toko->toko_alamat ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px;">Sales</td>
+                                            <td>:</td>
+                                            <td><?= $sales->salless_nama ?> / <?= $sales->salles_no_hp ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px;">Tanggal</td>
+                                            <td>:</td>
+                                            <td><?= TanggalIndo($invoice->invoice_tgl) ?></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <table class="table table-orders">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right; font-size:medium;" width="52%"> Jumlah : </td>
+                                        <td style="font-size:medium;"><b><?= $jumlah_brg; ?></b></td>
+                                        <td colspan="3" style="text-align: right; font-size:medium;" width="26%">Total : </td>
+                                        <td style="font-size:medium;"><b><?= _rupiah($total_keluar) ?></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" style="text-align: right; font-size:medium;">Diskon : </td>
+                                        <td style="font-size:medium;"><b><?= _rupiah($diskon) ?></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" style="text-align: right; font-size:medium;">NETT : </td>
+                                        <td style="font-size:medium;"><b><?= _rupiah($invoice->invoice_total_harga) ?></b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <div class="col-md-3" style="padding: 10px;">
                                 <hr>
                                 <?= $toko->toko_nama ?>
                             </div>
                         <?php } else { ?>
-                            <?php if ($total_page % 2 == 0) { ?>
-                                <div style="margin-bottom:280px"></div>
-                            <?php } else { ?>
-                                <div style="margin-bottom:230px"></div>
-                            <?php } ?>
+                            <div style="margin-bottom:200px"></div>
                         <?php } ?>
                         <?php
                         $page_from = $page_from + 10;

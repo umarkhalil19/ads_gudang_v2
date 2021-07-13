@@ -21,7 +21,7 @@ class Barang_masuk extends CI_Controller
 
     function index()
     {
-        //$this->db->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+        // $this->db->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
         $data['barang_masuk'] = $this->db->query("SELECT * FROM tbl_barang_masuk GROUP BY masuk_invoice");
         $this->mylib->aview('v_barang_masuk', $data);
     }
@@ -176,7 +176,7 @@ class Barang_masuk extends CI_Controller
     //         echo 'false';
     //     }
     // }
-    
+
     function get_barang_by_distributor()
     {
         $kode_distributor = $this->input->post('kode_distributor');
